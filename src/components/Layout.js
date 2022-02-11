@@ -1,5 +1,6 @@
 import react from 'react';
 import style from '../style.module.scss';
+import Timer from './Timer';
 
 export default class Main extends react.Component {
   constructor(props) {
@@ -8,9 +9,9 @@ export default class Main extends react.Component {
       blur: false
     }
   }
-  changeBlur(status) {
+  changeBlur() {
     this.setState({
-      blur: status,
+      blur: !this.state.blur,
     })
   }
 
@@ -18,8 +19,14 @@ export default class Main extends react.Component {
     return (
       <div>
         <div className={ style['main-container'] }>
-          <button onClick={ () => this.changeBlur(!this.state.blur) }>{ this.state.blur ? 'Unblur' : 'Blur' }</button>
-          
+          <div className={ style['timer-container'] }>
+            <Timer
+              change={ this.changeBlur.bind(this) }
+            />
+          </div>
+          <div className={ style['item-container'] }>
+            <div>qwq</div>
+          </div>
         </div>
         <div className={ `${style['background']} ${this.state.blur ? style['blur'] : ''}` }></div>
       </div>
