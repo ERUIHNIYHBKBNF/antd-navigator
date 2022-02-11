@@ -1,9 +1,7 @@
-import style from './style.module.scss';
+import Layout from './components/Layout';
 
 export default function App() {
   return (
-    <div className={ style['App'] }>
-      
-    </div>
+    <Layout/>
   );
 }
