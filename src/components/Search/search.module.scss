@@ -1,0 +1,14 @@
+.search-box {
+  width: 20vw;
+  height: 5vh;
+  transition: width 0.3s, opacity 0.3s;
+  opacity: 0.8;
+  &:hover {
+    width: 40vw;
+    opacity: 1;
+  }
+}
+.search-box-trigged {
+  width: 40vw;
+  opacity: 1;
+}

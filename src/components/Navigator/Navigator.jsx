@@ -1,7 +1,8 @@
-import style from '../style.module.scss';
+import style from './navigator.module.scss';
 import { useState, useEffect } from 'react';
 import { LeftOutlined, RightOutlined, PlusCircleFilled } from '@ant-design/icons';
 
+// 从本地读取用户的快捷站点列表
 function getNavigators() {
   // loaclStiorage.getItem('navigators')
   let navigators = new Array(14).fill(0).map((item, index) => {
@@ -13,17 +14,19 @@ function getNavigators() {
       isAdd: false,
     }
   });
+  // 添加一个add标识作为新增快捷站点的入口
   navigators.push({
     isAdd: true,
   });
   return navigators; 
 }
 
+// 获取上次退出时的页码
 function getPage() {
   return parseInt(localStorage.getItem('page')) || 0;
-  // return 0;
 }
 
+// 切换页面时，切分数组，取对应最多8个展示
 function changePage(offset, page, setPage, navigators, setActiveNavs) {
   let totalPage = Math.ceil((navigators.length + 1) / 8);
   if (0 <= page + offset && page + offset < totalPage) {
@@ -76,13 +79,14 @@ function renderNavigatorBox(item) {
             </div>
           </a>
         </div>
-      </li>);
+      </li>
+    );
 }
 
 export default function Navigator(props) {
   // 当前第几页
   const [page, setPage] = useState(getPage());
-  // 当前的8个导航格
+  // 当前的最多8个导航格
   const [activeNavs, setActiveNavs] = useState([]);
   // 所有的导航格
   const [navigators, setNavigators] = useState(getNavigators());

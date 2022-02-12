@@ -1,0 +1,14 @@
+.timer {
+  user-select: none;
+  font-size: 5rem;
+  padding: 10px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px #000;
+  opacity: 0.8;
+  transition: font-size 0.2s;
+  &:hover {
+    font-size: 5.5rem;
+    cursor: pointer;
+  }
+}

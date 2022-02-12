@@ -1,15 +1,15 @@
 import react from 'react';
-import style from '../style.module.scss';
-import Timer from './Timer';
-import Search from './Search';
-import Navigator from './Navigator';
+import style from './style.module.scss';
+import Timer from './Timer/Timer';
+import Search from './Search/Search';
+import Navigator from './Navigator/Navigator';
 
 export default class Main extends react.Component {
   constructor(props) {
     super(props);
     this.state = {
       useBlur: false,
-      showNavigator: true,
+      showNavigator: false,
     }
   }
   // 切换搜索与导航
@@ -35,14 +35,16 @@ export default class Main extends react.Component {
             />
           </div>
           <div className={ style['item-container'] }>
-            {this.state.showNavigator ?
-              <Navigator/> :
-              <Search
-                change={ this.changeBlur.bind(this) }
-              /> 
+            { // 搜索框与导航栏切换
+              this.state.showNavigator ?
+                <Navigator/> :
+                <Search
+                  change={ this.changeBlur.bind(this) }
+                /> 
             }
           </div>
         </div>
+        {/* 要使用高斯模糊滤镜所以把背景图片独立出来了qwq */}
         <div className={ `${style['background']} ${this.state.useBlur && style['blur']}` }></div>
       </div>
     );

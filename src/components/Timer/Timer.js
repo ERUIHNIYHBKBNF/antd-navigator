@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import style from '../style.module.scss';
+import style from './timer.module.scss';
 
 function formatTime(date) {
   const hour = String(date.getHours()).padStart(2, '0');
@@ -10,6 +10,7 @@ function formatTime(date) {
 
 export default function Timer(props) {
   const [date, setDate] = useState(new Date());
+  // did-mounted, will-unmounted
   useEffect(() => {
     let timer = setInterval(() => setDate(new Date()), 1000);
     return () => clearInterval(timer);
@@ -17,6 +18,7 @@ export default function Timer(props) {
   return (
     <span
       className={ style['timer'] }
+      // 父组件切换搜索框与导航栏显示
       onClick={ () => props.change() }
     >
       { formatTime(date) }

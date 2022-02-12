@@ -1,9 +1,10 @@
 import { Menu, Dropdown, Input } from "antd";
 import { useState } from "react";
-import style from "../style.module.scss";
+import style from "./search.module.scss";
 
 const items = [];
 
+// 下拉菜单
 function renderMenu(items) {
   return (items ?
     <div></div> :
@@ -27,28 +28,13 @@ export default function Search(props) {
         overlay={ renderMenu(items) }
         trigger={['click']}
       >
-          <Input
-            placeholder="搜索"
-            size="large"
-            onFocus={() => { props.change(true); setFocus(true); }}
-            onBlur={() => { props.change(false); setFocus(false); }}
-          ></Input>
+        <Input
+          placeholder="搜索"
+          size="large"
+          onFocus={() => { props.change(true); setFocus(true); }}
+          onBlur={() => { props.change(false); setFocus(false); }}
+        ></Input>
       </Dropdown>
     </div>
   );
 }
-
-
-
-
-// CheckboxGroup.jsx
-// (props) => {
-//   <form>
-//     {
-//       for(let i = 0; i < props.options.length; i++) {
-//         <input type="checkbox" value={ props.value ? props.value[i] : false } />
-//         <label> props.options[i] </label>
-//       }
-//     }
-//   </form>
-// }
