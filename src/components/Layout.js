@@ -1,34 +1,49 @@
 import react from 'react';
 import style from '../style.module.scss';
 import Timer from './Timer';
+import Search from './Search';
+import Navigator from './Navigator';
 
 export default class Main extends react.Component {
   constructor(props) {
     super(props);
     this.state = {
-      blur: false
+      useBlur: false,
+      showNavigator: true,
     }
   }
-  changeBlur() {
+  // 切换搜索与导航
+  changeItems() {
     this.setState({
-      blur: !this.state.blur,
+      showNavigator: !this.state.showNavigator,
+    });
+    this.changeBlur(!this.state.showNavigator);
+  }
+  // 切换背景
+  changeBlur(status) {
+    this.setState({
+      useBlur: status,
     })
   }
-
   render() {
     return (
       <div>
         <div className={ style['main-container'] }>
           <div className={ style['timer-container'] }>
             <Timer
-              change={ this.changeBlur.bind(this) }
+              change={ this.changeItems.bind(this) }
             />
           </div>
           <div className={ style['item-container'] }>
-            <div>qwq</div>
+            {this.state.showNavigator ?
+              <Navigator/> :
+              <Search
+                change={ this.changeBlur.bind(this) }
+              /> 
+            }
           </div>
         </div>
-        <div className={ `${style['background']} ${this.state.blur ? style['blur'] : ''}` }></div>
+        <div className={ `${style['background']} ${this.state.useBlur && style['blur']}` }></div>
       </div>
     );
   }
