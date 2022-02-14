@@ -1,6 +1,8 @@
 import style from './navigator.module.scss';
 import { useState, useEffect } from 'react';
-import { LeftOutlined, RightOutlined, PlusCircleFilled } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import EditModal from './EditModal';
+import NavigatorBox from './NavigatorBox';
 
 // 从本地读取用户的快捷站点列表
 function getNavigators() {
@@ -43,46 +45,6 @@ function changePage(offset, page, setPage, navigators, setActiveNavs) {
   setActiveNavs(activeNavs);
 }
 
-// 新增快捷站点入口
-function renderAdd() {
-  return (
-    <li
-      className={ style['navigator-box'] }
-      key={ 'add' }
-    >
-      <div className={ style['center'] }>
-        <div className={ style['icon'] }>
-          <span className={ style['add'] }>
-            <PlusCircleFilled />
-          </span>
-        </div>
-      </div>
-    </li>
-  );
-}
-
-// 每个小格的内容
-function renderNavigatorBox(item) {
-  return item.isAdd ?
-    renderAdd() :
-    (<li
-        className={ style['navigator-box'] }
-        key={ item.index }
-      >
-        <div className={ style['center'] }>
-          <a href={ item.url }>
-            <div className={ style['icon'] }>
-              <img src={ item.icon } alt="icon" />
-            </div>
-            <div className={ style['title'] }>
-              <span> { item.title } </span>
-            </div>
-          </a>
-        </div>
-      </li>
-    );
-}
-
 export default function Navigator(props) {
   // 当前第几页
   const [page, setPage] = useState(getPage());
@@ -90,9 +52,19 @@ export default function Navigator(props) {
   const [activeNavs, setActiveNavs] = useState([]);
   // 所有的导航格
   const [navigators, setNavigators] = useState(getNavigators());
-  useEffect(() => { changePage(0, page, setPage, navigators, setActiveNavs); }, [navigators, page]);
+  // 对话框可见
+  const [modalVisiable, setModalVisiable] = useState(false);
+
+  useEffect(() => {
+    changePage(0, page, setPage, navigators, setActiveNavs);
+  }, [navigators, page]);
   return (
     <div className={ style['navigator-container'] }>
+      <EditModal
+        visible={ modalVisiable }
+        setVisible={ setModalVisiable }
+        getNavigators={ getNavigators }
+      />
       <span className={ style['arrow'] }>
         <LeftOutlined
           onClick={ () => changePage(-1, page, setPage, navigators, setActiveNavs) }
@@ -100,7 +72,11 @@ export default function Navigator(props) {
       </span>
       <ul className={ style['main-container'] }>
         {
-          activeNavs.map((item) => renderNavigatorBox(item))
+          activeNavs.map((item) =>
+            <NavigatorBox
+              item={ item }
+              setModalVisiable={ setModalVisiable }
+            />)
         }
       </ul>
       <span className={ style['arrow'] } >

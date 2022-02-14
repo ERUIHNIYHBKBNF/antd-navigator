@@ -1,15 +1,15 @@
 import react from 'react';
 import style from './style.module.scss';
-import Timer from './Timer/Timer';
-import Search from './Search/Search';
-import Navigator from './Navigator/Navigator';
+import Timer from './Timer';
+import Search from './Search';
+import Navigator from './Navigator';
 
 export default class Main extends react.Component {
   constructor(props) {
     super(props);
     this.state = {
       useBlur: false,
-      showNavigator: false,
+      showNavigator: true,
     }
   }
   // 切换搜索与导航
