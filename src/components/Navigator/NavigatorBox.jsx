@@ -89,29 +89,29 @@ export default function NavigatorBox(props) {
       setModalId={ props.setModalId }
     /> :
     (<li
-        className={ style['navigator-box'] }
-        key={ props.item.id }
-      >
-        <div className={ style['center'] }>
-          <div
-            className={ style['nav-bg'] }
-            onClick={ () => { window.open(props.item.url) } }
-          >
-            <div className={ style['href'] }>
-              <div className={ style['icon'] }>
-                <img src={ props.item.icon } alt="icon" />
-              </div>
-              <div className={ style['title'] }>
-                <span> { props.item.title } </span>
-              </div>
+      className={ style['navigator-box'] }
+      key={ props.item.id }
+    >
+      <div className={ style['center'] }>
+        <div
+          className={ style['nav-bg'] }
+          onClick={ () => { window.open(props.item.url) } }
+        >
+          <div className={ style['href'] }>
+            <div className={ style['icon'] }>
+              <img src={ props.item.icon } alt="icon" />
+            </div>
+            <div className={ style['title'] }>
+              <span> { props.item.title } </span>
             </div>
           </div>
-          <DropdownList
-              id={ props.item.id }
-              setModalId={ props.setModalId }
-              setModalVisiable={ props.setModalVisiable }
-              setNavigators={ props.setNavigators }
-            />
         </div>
-      </li>);
+        <DropdownList
+            id={ props.item.id }
+            setModalId={ props.setModalId }
+            setModalVisiable={ props.setModalVisiable }
+            setNavigators={ props.setNavigators }
+          />
+      </div>
+    </li>);
 }

@@ -9,7 +9,7 @@ export default class Main extends react.Component {
     super(props);
     this.state = {
       useBlur: false,
-      showNavigator: true,
+      showNavigator: false,
     }
   }
   // 切换搜索与导航

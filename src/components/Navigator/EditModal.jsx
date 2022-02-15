@@ -49,7 +49,6 @@ export default function EditModal(props) {
 
   useEffect(() => {
     // 默认id传-1为新增，否则为修改
-    console.log(props);
     if (props.id !== -1) {
       let activeNav = getNavById(props.id);
       activeNav && form.setFieldsValue({

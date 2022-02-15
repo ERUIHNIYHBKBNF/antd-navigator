@@ -51,6 +51,10 @@ async function getKeywords(keyword, setSug) {
       keyword,
     });
   }
+  console.log(window.innerHeight);
+  if (window.innerHeight < 650) {
+    sug = sug.slice(0, 9);
+  }
   setSug(sug);
 }
 

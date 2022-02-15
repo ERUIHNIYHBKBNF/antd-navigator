@@ -3,6 +3,8 @@
   width: 100vw;
   top: 0;
   background-image: url(../assets/background.jpg);
+  // background-repeat: no-repeat;
+  background-size: cover;
   position: fixed;
   z-index: -1;
   transition: filter 0.2s;
