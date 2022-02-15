@@ -68,6 +68,7 @@ export default function Navigator() {
               item={ item }
               setModalVisiable={ setModalVisiable }
               setModalId={ setModalId }
+              setNavigators={ setNavigators }
             />)
         }
       </ul>

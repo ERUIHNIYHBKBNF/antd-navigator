@@ -33,6 +33,19 @@
         height: 75%;
         width: 75%;
         @include flex-center;
+        position: relative;
+        .edit {
+          position: absolute;
+          visibility: hidden;
+          top: 1vh;
+          right: 1vh;
+          color: #555555;
+          background-color: #999999;
+          border-radius: 10px;
+        }
+        &:hover .edit {
+          visibility: visible;
+        }
         .nav-bg {
           height: 100%;
           width: 100%;
@@ -42,29 +55,29 @@
             border-radius: 1vw;
             cursor: pointer;
           }
-        }
-        .href {
-          height: 100%;
-          width: 66.7%;
-          .icon {
-            height: 66.7%;
-            width: 100%;
-            @include flex-center;
-            img {
-              width: 80%;
-              border-radius: 50%;
-            }
-          }
-          .title {
-            height: 33%;
-            @include flex-center;
-            span {
+          .href {
+            height: 100%;
+            width: 66.7%;
+            .icon {
+              height: 66.7%;
+              width: 100%;
               @include flex-center;
-              color: #000;
-              width: 75%;
-              height: 60%;
-              background-color: rgba($color: #fff, $alpha: 0.6);
-              border-radius: 2vw;
+              img {
+                width: 80%;
+                border-radius: 50%;
+              }
+            }
+            .title {
+              height: 33%;
+              @include flex-center;
+              span {
+                @include flex-center;
+                color: #000;
+                width: 75%;
+                height: 60%;
+                background-color: rgba($color: #fff, $alpha: 0.6);
+                border-radius: 2vw;
+              }
             }
           }
         }
@@ -78,5 +91,10 @@
     font-size: 5vw;
     color: #dddddd;
     opacity: 0.7;
+  }
+}
+.menu-icon {
+  &:hover {
+    color: blue;
   }
 }

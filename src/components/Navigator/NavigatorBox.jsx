@@ -1,5 +1,7 @@
 import style from './navigator.module.scss';
-import { PlusCircleFilled } from '@ant-design/icons';
+import { PlusCircleFilled, EditOutlined, DeleteOutlined, MoreOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Modal } from 'antd';
+import { useState } from 'react';
 
 // 新增快捷站点入口
 function RenderAdd(props) {
@@ -28,8 +30,55 @@ function RenderAdd(props) {
 }
 
 // 编辑/删除操作按钮
-function DropdownList() {
-  return <div></div>
+function DropdownList(props) {
+  const [modalVisible, setModalVisible] = useState(false);
+  // 确认删除对话框
+  const modal =
+    <Modal
+      visible={ modalVisible } 
+      onOk={ () => {
+        let navigators = JSON.parse(localStorage.getItem('navigators')) || [];
+        navigators = navigators.filter(nav => nav.id !== props.id);
+        localStorage.setItem('navigators', JSON.stringify(navigators));
+        navigators.push({
+          isAdd: true,
+        });
+        props.setNavigators(navigators);
+        setModalVisible(false);
+      } }
+      onCancel={ () => setModalVisible(false) }
+    >
+      <p> 确认删除? </p>
+    </Modal>;
+  const menu = 
+    <Menu>
+      <Menu.Item
+        className={ style['menu-icon'] }
+        onClick={ async () => {
+          await props.setModalId(props.id);
+          props.setModalVisiable(true);
+        } }
+      >
+        <EditOutlined />
+      </Menu.Item>
+      <Menu.Item
+        className={ style['menu-icon'] }
+        onClick={ async () => {
+          setModalVisible(true);
+        } }
+      >
+        <DeleteOutlined />
+      </Menu.Item>
+    </Menu>
+  ;
+  return (<Dropdown
+    overlay={ menu }
+  >
+    <div className={ style['edit'] }>
+      { modal }
+      <MoreOutlined />
+    </div>
+  </Dropdown>);
 }
 
 // 每个小格的内容
@@ -57,7 +106,12 @@ export default function NavigatorBox(props) {
               </div>
             </div>
           </div>
-          <DropdownList/>
+          <DropdownList
+              id={ props.item.id }
+              setModalId={ props.setModalId }
+              setModalVisiable={ props.setModalVisiable }
+              setNavigators={ props.setNavigators }
+            />
         </div>
       </li>);
 }
