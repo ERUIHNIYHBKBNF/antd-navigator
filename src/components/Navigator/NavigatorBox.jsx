@@ -1,5 +1,6 @@
 import style from './navigator.module.scss';
 import { PlusCircleFilled } from '@ant-design/icons';
+
 // 新增快捷站点入口
 function RenderAdd(props) {
   return (
@@ -12,7 +13,10 @@ function RenderAdd(props) {
           <div className={ style['icon'] }>
             <span
               className={ style['add'] }
-              onClick={ () => { props.setModalVisiable(true) } }
+              onClick={ async () => {
+                await props.setModalId(-1);
+                props.setModalVisiable(true);
+              } }
             >
               <PlusCircleFilled />
             </span>
@@ -31,10 +35,13 @@ function DropdownList() {
 // 每个小格的内容
 export default function NavigatorBox(props) {
   return props.item.isAdd ?
-    <RenderAdd setModalVisiable={ props.setModalVisiable } /> :
+    <RenderAdd
+      setModalVisiable={ props.setModalVisiable } 
+      setModalId={ props.setModalId }
+    /> :
     (<li
         className={ style['navigator-box'] }
-        key={ props.item.index }
+        key={ props.item.id }
       >
         <div className={ style['center'] }>
           <div
@@ -52,6 +59,5 @@ export default function NavigatorBox(props) {
           </div>
           <DropdownList/>
         </div>
-      </li>
-    );
+      </li>);
 }

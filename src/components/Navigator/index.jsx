@@ -4,30 +4,6 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import EditModal from './EditModal';
 import NavigatorBox from './NavigatorBox';
 
-// 从本地读取用户的快捷站点列表
-function getNavigators() {
-  // loaclStiorage.getItem('navigators')
-  let navigators = new Array(14).fill(0).map((item, index) => {
-    return {
-      icon: 'https://cdn.jsdelivr.net/gh/ERUIHNIYHBKBNF/picapica@main/common/chinochann.3kjx7u46s9g0.jpg',
-      title: 'title',
-      url: 'https://baidu.com',
-      index: index,
-      isAdd: false,
-    }
-  });
-  // 添加一个add标识作为新增快捷站点的入口
-  navigators.push({
-    isAdd: true,
-  });
-  return navigators; 
-}
-
-// 获取上次退出时的页码
-function getPage() {
-  return parseInt(localStorage.getItem('page')) || 0;
-}
-
 // 切换页面时，切分数组，取对应最多8个展示
 function changePage(offset, page, setPage, navigators, setActiveNavs) {
   let totalPage = Math.ceil((navigators.length + 1) / 8);
@@ -45,26 +21,41 @@ function changePage(offset, page, setPage, navigators, setActiveNavs) {
   setActiveNavs(activeNavs);
 }
 
-export default function Navigator(props) {
-  // 当前第几页
-  const [page, setPage] = useState(getPage());
+export default function Navigator() {
+  // 从本地获取用户的快捷站点列表
+  const getNavigators = () => JSON.parse(localStorage.getItem('navigators')) || [];
+
+  // 当前第几页，获取上次退出时的页码
+  const [page, setPage] = useState(() => parseInt(localStorage.getItem('page')) || 0);
   // 当前的最多8个导航格
   const [activeNavs, setActiveNavs] = useState([]);
-  // 所有的导航格
-  const [navigators, setNavigators] = useState(getNavigators());
   // 对话框可见
   const [modalVisiable, setModalVisiable] = useState(false);
-
+  // 对话框要处理的标签
+  const [modalId, setModalId] = useState(-1);
+  // 所有的导航格
+  const [navigators, setNavigators] = useState(() => {
+    let navigators = getNavigators();
+    // 添加一个add标识作为新增快捷站点的入口
+    navigators.push({
+      isAdd: true,
+    });
+    return navigators;
+  });
+  
   useEffect(() => {
     changePage(0, page, setPage, navigators, setActiveNavs);
   }, [navigators, page]);
+
   return (
     <div className={ style['navigator-container'] }>
-      <EditModal
+      { // 对话框关闭时直接销毁组件清空内容
+        modalVisiable && <EditModal
         visible={ modalVisiable }
         setVisible={ setModalVisiable }
-        getNavigators={ getNavigators }
-      />
+        setNavigators = { setNavigators }
+        id = { modalId }
+      />}
       <span className={ style['arrow'] }>
         <LeftOutlined
           onClick={ () => changePage(-1, page, setPage, navigators, setActiveNavs) }
@@ -76,6 +67,7 @@ export default function Navigator(props) {
             <NavigatorBox
               item={ item }
               setModalVisiable={ setModalVisiable }
+              setModalId={ setModalId }
             />)
         }
       </ul>
